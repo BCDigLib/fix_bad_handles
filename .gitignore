@@ -1,3 +1,5 @@
 *oai*
 *.json
-*.txt*
+*.txt
+*.bak
+*.out
