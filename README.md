@@ -5,6 +5,10 @@ This code was written to work specifically with OAI XML from our
 Digital Commonwealth feed. It should be carefully reviewed before adapting 
 for another use.
 
+#### analyze_handles.rb
+Parses a handle batch file with one or more MODIFY statements to find the URL 
+index and destination for each handle.
+
 #### find_bad_handles.rb
 Parses one or more OAI XML files to locate handles, changes the
 URLs to use HTTPS, then generates a text file to batch redirect the files.
