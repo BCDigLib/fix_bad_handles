@@ -29,7 +29,5 @@ handles.each do |handle|
 end
 
 File.open('output.txt', 'w') do |file|
-  results.each do |handle, value|
-    file.write("#{handle}\t#{value[:index]}\t#{value[:url]}\n\n")
-  end
+  results.each { |handle, value| file.write("#{handle}\t#{value[:index]}\t#{value[:url]}\n") }
 end
