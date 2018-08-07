@@ -11,7 +11,28 @@ if ARGV.empty?
 end
 
 input = File.readlines(ARGV[0])
-api_prefix = 'http://hdl.handle.net/api/handles/'
+api_prefix = 'https://hdl.handle.net/api/handles/'
+handles = []
+results = {}
 
-input.each do |line|
+input.each { |line| handles << line.split(' ').last if line.start_with?('MODIFY') }
+
+handles.each do |handle|
+  endpoint = api_prefix + handle
+  response = JSON.parse(Faraday.get(endpoint).body)
+
+  url_node = response["values"].select { |node| node["type"] == "URL" }[0]
+  url_index = url_node["index"]
+  url_destination = url_node["data"]["value"]
+
+  results[handle] = { index: url_index, url: url_destination }
+end
+
+File.open('output.txt', 'w') do |file|
+  results.each do |handle, value|
+    file.write(handle)
+    file.write(value[:index])
+    file.write(value[:url])
+    file.write("\n")
+  end
 end
